@@ -8,8 +8,7 @@
       "buildRoot": "${projectDir}\\build\\${name}",
       "cmakeCommandArgs": "-DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl",
       "buildCommandArgs": "",
-      "enableClangTidyCodeAnalysis": true,
-      "variables": []
+      "enableClangTidyCodeAnalysis": true
     },
     {
       "name": "msvc-release",
@@ -19,18 +18,16 @@
       "buildRoot": "${projectDir}\\build\\${name}",
       "cmakeCommandArgs": "-DCMAKE_C_COMPILER=cl -DCMAKE_CXX_COMPILER=cl",
       "buildCommandArgs": "",
-      "enableClangTidyCodeAnalysis": true,
-      "variables": []
+      "enableClangTidyCodeAnalysis": true
     },
     {
       "name": "clang-debug",
       "generator": "Ninja",
       "configurationType": "Debug",
       "buildRoot": "${projectDir}\\build\\${name}",
-      "cmakeCommandArgs": "-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++", // Override compiler
+      "cmakeCommandArgs": "-DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++",
       "buildCommandArgs": "",
-      "inheritEnvironments": [ "clang_cl_x64_x64" ],
-      "variables": []
+      "inheritEnvironments": [ "clang_cl_x64_x64" ]
     }
   ]
 }
