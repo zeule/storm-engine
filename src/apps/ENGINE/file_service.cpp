@@ -5,6 +5,9 @@
 #include "utf8.h"
 #include <exception>
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <filesystem>
 
 #define COMMENT ';'
 #define SECTION_A '['
@@ -80,6 +83,24 @@ BOOL FILE_SERVICE::_WriteFile(HANDLE hFile, const void *lpBuffer, uint32_t nNumb
     //    if(dwR != nNumberOfBytesToWrite) if(Exceptions_Mask & _X_NO_FILE_WRITE) throw
     //    std::exception(_X_NO_FILE_WRITE);
     return bRes;
+}
+
+BOOL FILE_SERVICE::_STDReadFile(std::filesystem::path path, void *buffer, uint32_t bytes_to_read, uint32_t *bytes_read, uint32_t seek_to)
+{
+    std::basic_ifstream<unsigned char> fh;
+
+    
+    fh.open(path.wstring(), std::fstream::in | std::fstream::binary);
+
+    if (!fh.is_open())
+    {
+        return false;
+    }
+    fh.seekg(seek_to);
+    fh.read((unsigned char *)buffer, bytes_to_read);
+    *bytes_read = fh.gcount();
+
+    return *bytes_read == bytes_to_read;
 }
 
 BOOL FILE_SERVICE::_ReadFile(HANDLE hFile, void *lpBuffer, uint32_t nNumberOfBytesToRead, uint32_t *lpNumberOfBytesRead)

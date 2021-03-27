@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <cstdint>
 #include <string>
+#include <filesystem>
 
 class INIFILE;
 
@@ -28,6 +29,8 @@ class VFILE_SERVICE
     virtual BOOL _DeleteFile(const char *lpFileName) = 0;
     virtual BOOL _WriteFile(HANDLE hFile, const void *lpBuffer, uint32_t nNumberOfBytesToWrite,
                             uint32_t *lpNumberOfBytesWritten) = 0;
+    virtual BOOL _STDReadFile(std::filesystem::path path, void *buffer, uint32_t bytes_to_read, uint32_t *bytes_read, uint32_t seek_to = 0) = 0;
+
     virtual BOOL _ReadFile(HANDLE hFile, void *lpBuffer, uint32_t nNumberOfBytesToRead,
                            uint32_t *lpNumberOfBytesRead) = 0;
     virtual HANDLE _FindFirstFile(const char *lpFileName, LPWIN32_FIND_DATA lpFindFileData) = 0;

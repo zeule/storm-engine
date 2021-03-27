@@ -96,6 +96,7 @@ class FILE_SERVICE : public VFILE_SERVICE
     BOOL _DeleteFile(const char *lpFileName) override;
     BOOL _WriteFile(HANDLE hFile, const void *lpBuffer, uint32_t nNumberOfBytesToWrite,
                     uint32_t *lpNumberOfBytesWritten) override;
+    BOOL _STDReadFile(std::filesystem::path path, void *buffer, uint32_t bytes_to_read, uint32_t *bytes_read, uint32_t seek_to) override;
     BOOL _ReadFile(HANDLE hFile, void *lpBuffer, uint32_t nNumberOfBytesToRead, uint32_t *lpNumberOfBytesRead) override;
     HANDLE _FindFirstFile(const char *lpFileName, LPWIN32_FIND_DATA lpFindFileData) override;
     BOOL _FindNextFile(HANDLE hFindFile, LPWIN32_FIND_DATA lpFindFileData) override;
