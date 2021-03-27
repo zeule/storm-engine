@@ -64,7 +64,7 @@ class LGeometry
     long numVrt;
     long maxVrt;
 
-    std::vector<Triangle> trg;
+    std::vector<StormTriangle> trg;
     long numTrg;
     long maxTrg;
 

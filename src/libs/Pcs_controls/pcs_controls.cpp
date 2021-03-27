@@ -20,10 +20,16 @@ PCS_CONTROLS::PCS_CONTROLS()
     nControlsNum = 0;
 
     // nMouseXPrev = nMouseYPrev = 0;
-    RECT r;
+    /*RECT r;
     GetWindowRect(core.GetAppHWND(), &r);
     nMouseXPrev = r.left + (r.right - r.left) / 2;
-    nMouseYPrev = r.top + (r.bottom - r.top) / 2;
+    nMouseYPrev = r.top + (r.bottom - r.top) / 2;*/
+
+    POINT p;
+    GetCursorPos(&p);
+
+    nMouseXPrev = p.x;
+    nMouseYPrev = p.y;
 
     nLastControlTime = 0;
 
@@ -497,9 +503,14 @@ void PCS_CONTROLS::Update(uint32_t DeltaTime)
 
     RECT r;
     GetWindowRect(core.GetAppHWND(), &r);
-    nMouseXPrev = r.left + (r.right - r.left) / 2;
-    nMouseYPrev = r.top + (r.bottom - r.top) / 2;
-    SetCursorPos(nMouseXPrev, nMouseYPrev);
+    POINT p;
+
+    GetCursorPos(&p);
+
+
+    nMouseXPrev = p.x;
+    nMouseYPrev = p.y;
+    //SetCursorPos(nMouseXPrev, nMouseYPrev);
     nLastControlTime += DeltaTime;
 }
 

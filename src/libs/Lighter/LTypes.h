@@ -78,7 +78,7 @@ struct Vertex
     long cindex;             // Index in final buffer of object colors
 };
 
-struct Triangle
+struct StormTriangle
 {
     CVECTOR n; // Normal
     float sq;  // Area
