@@ -102,7 +102,7 @@ class Application : public entry::AppI
         bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
 
         
-        m_texture = loadTexture("textures/tux.png");
+        //m_texture = loadTexture("textures/tux_transparent.png");
 
 
         // Init stuff
@@ -115,6 +115,9 @@ class Application : public entry::AppI
         m_renderService = static_cast<VDX9RENDER *>(core.CreateService("dx9render"));
         if (m_renderService == nullptr)
             throw std::exception("!Butterflies: No service 'dx9render'");
+
+        PortraitID = m_renderService->BGFXTextureCreate("BATTLE_INTERFACE/PORTRAITS/face_1.tga");
+        m_texture = m_renderService->GetBGFXTextureFromID(PortraitID);
 
     }
 
@@ -173,6 +176,8 @@ class Application : public entry::AppI
     //SpriteRenderer m_spriteRenderer;
 
     std::shared_ptr<TextureResource> m_texture;
+
+    long PortraitID;
 
     VDX9RENDER *m_renderService;
 };
