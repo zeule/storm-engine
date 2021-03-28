@@ -89,6 +89,9 @@ set(PROJECT_SOURCES
     vmodule_api.h
     vparticle_system.h
     Weather_Base.h
+
+    sprite_renderer.h
+
 )
 
 add_custom_target(${PROJECT_NAME}_ SOURCES ${PROJECT_SOURCES})

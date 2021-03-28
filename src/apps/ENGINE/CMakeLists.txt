@@ -65,7 +65,7 @@ add_executable(${PROJECT_NAME} WIN32
     token.cpp
     token.h
     VmaInit.h
-
+    
     ${STORM_RESOURCE_DIR}/engine/resource.rc
 )
 
