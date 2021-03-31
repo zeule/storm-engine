@@ -95,8 +95,6 @@ class Application : public entry::AppI
         init.resolution.height = m_height;
         init.resolution.reset = m_reset;
 
-        //bgfx::renderFrame();
-
         bgfx::init(init);
 
         const bgfx::Caps *caps = bgfx::getCaps();
@@ -110,7 +108,7 @@ class Application : public entry::AppI
         bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
 
         
-        m_texture = loadTexture("textures/pirate_flag.jpg");
+        //m_texture = loadTexture("textures/pirate_flag.jpg");
 
         m_texture->size.width = 1920;
         m_texture->size.height = 1080;
@@ -121,7 +119,7 @@ class Application : public entry::AppI
 
         core.AppState(true);
 
-        _loopMain(); // to allow service initialization, delete after tests
+        _loopMain(); // to allow service initialization, remove/comment after tests
 
         m_renderService = static_cast<VDX9RENDER *>(core.CreateService("dx9render"));
         if (m_renderService == nullptr)
@@ -153,11 +151,12 @@ class Application : public entry::AppI
 
             bgfx::touch(0);
 
-            //m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0));
+            m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0));
+            
             _loopMain();
 
             //bgfx::frame();
-            //bgfx::renderFrame();
+
             return true;
         }
 
