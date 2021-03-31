@@ -11,6 +11,11 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/basic_file_sink.h>
 
+
+#include "bx/bx.h"
+#include "bgfx/bgfx.h"
+#include "bgfx/platform.h"
+
 #include "sprite_renderer.h"
 
 #include "common.h"
@@ -84,11 +89,14 @@ class Application : public entry::AppI
         m_reset = BGFX_RESET_NONE;
 
         bgfx::Init init;
-        init.type = bgfx::RendererType::OpenGL;
+        init.type = bgfx::RendererType::Direct3D9;
         init.vendorId = args.m_pciId;
         init.resolution.width = m_width;
         init.resolution.height = m_height;
         init.resolution.reset = m_reset;
+
+        //bgfx::renderFrame();
+
         bgfx::init(init);
 
         const bgfx::Caps *caps = bgfx::getCaps();
@@ -102,7 +110,10 @@ class Application : public entry::AppI
         bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
 
         
-        //m_texture = loadTexture("textures/tux_transparent.png");
+        m_texture = loadTexture("textures/pirate_flag.jpg");
+
+        m_texture->size.width = 1920;
+        m_texture->size.height = 1080;
 
 
         // Init stuff
@@ -116,9 +127,21 @@ class Application : public entry::AppI
         if (m_renderService == nullptr)
             throw std::exception("!Butterflies: No service 'dx9render'");
 
-        PortraitID = m_renderService->BGFXTextureCreate("BATTLE_INTERFACE/PORTRAITS/face_1.tga");
-        m_texture = m_renderService->GetBGFXTextureFromID(PortraitID);
+        //PortraitID = m_renderService->BGFXTextureCreate("BATTLE_INTERFACE/PORTRAITS/face_1.tga");
+        //m_texture = m_renderService->GetBGFXTextureFromID(PortraitID);
 
+
+        
+        auto &win = m_state;
+
+        if (win.m_width != m_width || win.m_height != m_height)
+        {
+            // win.m_nwh = m_state.m_nwh;
+            win.m_width = m_width;
+            win.m_height = m_height;
+
+            entry::setWindowSize(win.m_handle, m_width, m_height);
+        }
     }
 
 
@@ -128,24 +151,13 @@ class Application : public entry::AppI
         {
             entry::MouseState mouseState = m_state.m_mouse;          
 
-            auto& win = m_state;
-
-            if (win.m_width != m_width || win.m_height != m_height)
-            {
-                //win.m_nwh = m_state.m_nwh;
-                win.m_width = m_width;
-                win.m_height = m_height;
-
-                entry::setWindowSize(win.m_handle, m_width, m_height);
-            }
-
             bgfx::touch(0);
 
-            m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0));
-            //_loopMain();
+            //m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0));
+            _loopMain();
 
-            bgfx::frame();
-
+            //bgfx::frame();
+            //bgfx::renderFrame();
             return true;
         }
 
@@ -255,11 +267,13 @@ int _main_(int _argc, char **_argv)
     // evaluate SteamApi singleton
     steamapi::SteamApi::getInstance(!bSteam);
 
-    storm::Application app("Sea Dogs", "Rendering test", "https://github.com/storm-devs/storm-engine", screen_x, screen_y);
-
-
+    
     entry::s_width = screen_x;
     entry::s_height = screen_y;
+
+
+
+    storm::Application app("Sea Dogs", "Rendering test", "https://github.com/storm-devs/storm-engine", screen_x, screen_y);
 
     return entry::runApp(&app, _argc, _argv);
 }
