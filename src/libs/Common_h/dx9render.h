@@ -152,14 +152,14 @@ class VDX9RENDER : public SERVICE
     virtual std::shared_ptr<SpriteRenderer> GetSpriteRenderer() = 0;
 
     virtual void DrawSprite(std::shared_ptr<TextureResource> texture, uint32_t color,
-                    const glm::vec2 &position) = 0;
+                    const glm::vec2 &position, float depth) = 0;
 
     virtual void DrawSprite(std::shared_ptr<TextureResource> texture, const glm::vec4 &src, uint32_t color,
                     const glm::vec2 &position, const glm::vec2 &origin, const glm::vec2 &scale, float angle,
                     float depth, bool flip_x, bool flip_y) = 0;
 
-    virtual void DrawSprites(std::shared_ptr<TextureResource> texture,std::vector<glm::vec3> &vertices,
-                             std::vector<glm::vec2> &u, std::vector<glm::vec2> &v, std::vector<uint32_t> &color) = 0;
+    virtual void DrawSprites(std::shared_ptr<TextureResource> texture, std::vector<glm::vec3> &vertices, glm::vec2 &u,
+                             glm::vec2 &v, uint32_t &color) = 0;
 
     // DX9Render: Draw Section
     virtual void DrawRects(RS_RECT *pRSR, uint32_t dwRectsNum, const char *cBlockName = nullptr,

@@ -86,10 +86,10 @@ class Application : public entry::AppI
         Args args(_argc, _argv);
 
         m_debug = BGFX_DEBUG_TEXT;
-        m_reset = BGFX_RESET_NONE;
+        m_reset = BGFX_RESET_VSYNC;
 
         bgfx::Init init;
-        init.type = bgfx::RendererType::Direct3D9;
+        init.type = bgfx::RendererType::Direct3D11;
         init.vendorId = args.m_pciId;
         init.resolution.width = m_width;
         init.resolution.height = m_height;
@@ -106,9 +106,10 @@ class Application : public entry::AppI
 
         // Set view 0 clear state.
         bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+        //bgfx::setViewClear(0, BGFX_CLEAR_NONE, 0x303030ff, 1.0f, 0);
 
         
-        //m_texture = loadTexture("textures/pirate_flag.jpg");
+        m_texture = loadTexture("textures/pirate_flag.jpg");
 
         m_texture->size.width = 1920;
         m_texture->size.height = 1080;
@@ -125,8 +126,8 @@ class Application : public entry::AppI
         if (m_renderService == nullptr)
             throw std::exception("!Butterflies: No service 'dx9render'");
 
-        //PortraitID = m_renderService->BGFXTextureCreate("BATTLE_INTERFACE/PORTRAITS/face_1.tga");
-        //m_texture = m_renderService->GetBGFXTextureFromID(PortraitID);
+        PortraitID = m_renderService->BGFXTextureCreate("BATTLE_INTERFACE/PORTRAITS/face_1.tga");
+        m_texture2 = m_renderService->GetBGFXTextureFromID(PortraitID);
 
 
         
@@ -151,11 +152,14 @@ class Application : public entry::AppI
 
             bgfx::touch(0);
 
-            m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0));
+            //m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0), -1);
+            //m_renderService->DrawSprite(m_texture2, 1, glm::vec2(0, 0));
             
             _loopMain();
 
-            //bgfx::frame();
+            m_renderService->GetSpriteRenderer()->Submit();
+
+            bgfx::frame();
 
             return true;
         }
@@ -187,6 +191,7 @@ class Application : public entry::AppI
     //SpriteRenderer m_spriteRenderer;
 
     std::shared_ptr<TextureResource> m_texture;
+    std::shared_ptr<TextureResource> m_texture2;
 
     long PortraitID;
 
