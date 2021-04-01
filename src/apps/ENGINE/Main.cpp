@@ -86,10 +86,10 @@ class Application : public entry::AppI
         Args args(_argc, _argv);
 
         m_debug = BGFX_DEBUG_TEXT;
-        m_reset = BGFX_RESET_NONE;
+        m_reset = BGFX_RESET_VSYNC;
 
         bgfx::Init init;
-        init.type = bgfx::RendererType::OpenGL;
+        init.type = bgfx::RendererType::Direct3D11;
         init.vendorId = args.m_pciId;
         init.resolution.width = m_width;
         init.resolution.height = m_height;
@@ -106,6 +106,7 @@ class Application : public entry::AppI
 
         // Set view 0 clear state.
         bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x303030ff, 1.0f, 0);
+        //bgfx::setViewClear(0, BGFX_CLEAR_NONE, 0x303030ff, 1.0f, 0);
 
         
         m_texture = loadTexture("textures/pirate_flag.jpg");
@@ -151,10 +152,12 @@ class Application : public entry::AppI
 
             bgfx::touch(0);
 
-            //m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0));
+            //m_renderService->DrawSprite(m_texture, 1, glm::vec2(0, 0), -1);
             //m_renderService->DrawSprite(m_texture2, 1, glm::vec2(0, 0));
             
             _loopMain();
+
+            m_renderService->GetSpriteRenderer()->Submit();
 
             bgfx::frame();
 
