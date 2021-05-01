@@ -68,7 +68,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     // Init logging
     auto systemLogPath = fs::GetLogsPath() / u8"system.log";
     auto systemLog = spdlog::basic_logger_st("system", systemLogPath.string(), true);
-    systemLog->flush_on(spdlog::level::critical);
     set_default_logger(systemLog);
 
     auto compileLogPath = fs::GetLogsPath() / COMPILER_LOG_FILENAME;
@@ -76,6 +75,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
 
     auto errorLogPath = fs::GetLogsPath() / COMPILER_ERRORLOG_FILENAME;
     auto errorLog = spdlog::basic_logger_st("error", errorLogPath.string(), true);
+
+#if _DEBUG
+    systemLog->flush_on(spdlog::level::info);
+    compileLog->flush_on(spdlog::level::info);
+    errorLog->flush_on(spdlog::level::info);
+#else
+    systemLog->flush_on(spdlog::level::warn);
+    compileLog->flush_on(spdlog::level::warn);
+    errorLog->flush_on(spdlog::level::warn);
+#endif
 
     std::set_terminate(spdlog::shutdown);
     std::atexit(spdlog::shutdown);
