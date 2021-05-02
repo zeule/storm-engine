@@ -159,7 +159,6 @@ class SEA : public SEA_BASE
 
     void AddBlock(long iTX, long iTY, long iSize, long iLOD);
     void BuildTree(long iTX, long iTY, long iLev);
-    void SetBlock(uint32_t dwBlockIndex);
 
     bool isVisibleBBox(const CVECTOR &vCenter, const CVECTOR &v1, const CVECTOR &v2);
     void CalculateLOD(const CVECTOR &v1, const CVECTOR &v2, long &iMaxLOD, long &iMinLOD);
@@ -240,9 +239,4 @@ class SEA : public SEA_BASE
     }
     void LostRender();
     void RestoreRender();
-
-    // bool            Init();
-    // void            Realize(uint32_t Delta_Time);
-    // void            Execute(uint32_t Delta_Time);
-    // uint32_t cdecl    ProcessMessage(MESSAGE & message);
 };
