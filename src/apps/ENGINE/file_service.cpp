@@ -129,7 +129,6 @@ std::vector<std::filesystem::path> FILE_SERVICE::_GetFsPathsByMask(const char *s
         srcPath = std::filesystem::u8path(sourcePath);
     }
 
-    std::filesystem::path curPath;
     std::error_code ec;
     auto it = std::filesystem::directory_iterator(srcPath, ec);
     if (ec)
@@ -148,8 +147,10 @@ std::vector<std::filesystem::path> FILE_SERVICE::_GetFsPathsByMask(const char *s
         {
             continue;
         }
-        curPath = dirEntry.path();
-        if (storm::wildicmp(mask, curPath.filename().string().c_str()))
+        std::filesystem::path curPath = dirEntry.path();
+        std::u8string u8filename = curPath.filename().u8string();
+        std::string filename(u8filename.begin(), u8filename.end());
+        if (storm::wildicmp(mask, filename.c_str()))
         {
             if (getPaths)
             {
