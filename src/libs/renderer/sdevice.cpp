@@ -1799,6 +1799,9 @@ bool DX9RENDER::BGFXTextureLoad(long t)
                     
                     break;
 
+                case TXF_R5G6B5:
+                        break;
+
                 case TXF_X8R8G8B8:
                 default:
                     throw std::exception("Not implemented yet");
@@ -3156,7 +3159,7 @@ void DX9RENDER::BGFXSetTransformUpdateViews(long type, D3DMATRIX *mtx)
 
         bgfxView = mv;
 
-        bgfx::setViewTransform(1, bgfxView.matrix, bgfxProjection.matrix);
+        bgfx::setViewTransform(0, bgfxView.matrix, bgfxProjection.matrix);
     }
     break;
 
@@ -3167,7 +3170,7 @@ void DX9RENDER::BGFXSetTransformUpdateViews(long type, D3DMATRIX *mtx)
 
         bgfxProjection = mp;
 
-        bgfx::setViewTransform(1, bgfxView.matrix, bgfxProjection.matrix);
+        bgfx::setViewTransform(0, bgfxView.matrix, bgfxProjection.matrix);
 
         // bgfx::setViewTransform(1, bgfxView.matrix, bgfxProjection.matrix);
     }
