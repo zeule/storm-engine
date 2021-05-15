@@ -3,7 +3,6 @@
 #include "../../Shared/sea_ai/Script_defines.h"
 #include "Foam.h"
 #include "Weather_Base.h"
-#include "filesystem.h"
 #include "inlines.h"
 #include "tga.h"
 #include <cstdio>
@@ -447,7 +446,8 @@ bool ISLAND::CreateShadowMap(char *pDir, char *pName)
         throw std::runtime_error("No found WEATHER entity!");
     }
 
-    const fs::path path = fs::path() / "resource" / "foam" / pDir / AttributesPointer->GetAttribute("LightingPath");
+    const std::filesystem::path path =
+        std::filesystem::path() / "resource" / "foam" / pDir / AttributesPointer->GetAttribute("LightingPath");
     const std::string fileName = path.string() + pName + ".tga";
 
     fShadowMapSize = 2.0f * Max(vRealBoxSize.x, vRealBoxSize.z) + 1024.0f;
@@ -556,7 +556,7 @@ bool ISLAND::CreateHeightMap(char *pDir, char *pName)
     TGA_H tga_head;
     char str_tmp[256];
 
-    fs::path path = fs::path() / "resource" / "foam" / pDir / pName;
+    std::filesystem::path path = std::filesystem::path() / "resource" / "foam" / pDir / pName;
     std::string fileName = path.string() + ".tga";
     std::string iniName = path.string() + ".ini";
 
@@ -754,7 +754,7 @@ bool ISLAND::Mount(char *fname, char *fdir, entid_t *eID)
 
     SetName(fname);
 
-    const fs::path path = fs::path() / fdir / fname;
+    const std::filesystem::path path = std::filesystem::path() / fdir / fname;
     const std::string pathStr = path.string();
     // MessageBoxA(NULL, (LPCSTR)path.c_str(), "", MB_OK); //~!~
     // sRealFileName.Format("%s\\%s", fdir, fname); sRealFileName.CheckPath();
