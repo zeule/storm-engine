@@ -37,7 +37,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     // Init FS
     FILE_SERVICE File_Service;
     fio = &File_Service;
-    
+
     // Init diagnostics
     const auto lifecycleDiagnosticsGuard = lifecycleDiagnostics.initialize(true);
     if (!lifecycleDiagnosticsGuard)
